@@ -20,7 +20,9 @@ export class AuthService {
     login(userAccaunt: UserAccaunt) {
         return this.http.post<AuthResponse>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC3yRSecgme-AUD8YZLYxEfVl0x5uJ5yOk',
             { ...userAccaunt, returnSecureToken: true }).pipe(catchError(this.errorHandler),
-                tap(responseData => this.authenticationHandler({ ...responseData })))
+                tap(responseData => {
+                    this.authenticationHandler({ ...responseData })
+                }))
     }
 
     private authenticationHandler({ email, localId, idToken, expiresIn }: AuthResponse) {
